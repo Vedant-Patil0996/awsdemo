@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-// 🔴 PASTE YOUR LAMBDA FUNCTION URL HERE 🔴
-// Make sure to REMOVE the trailing slash at the end if it exists.
-const API_URL = "https://<YOUR-ID>.lambda-url.<REGION>.on.aws";
+// ✅ I pasted your actual AWS URL here:
+const API_URL = "https://rz5jmhfggtdlfrmvtfwnf2ffcu0lsoxe.lambda-url.eu-north-1.on.aws/";
 
 function App() {
   const [data, setData] = useState(null);
@@ -10,7 +9,6 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Test the connection immediately on load
     fetch(API_URL)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
@@ -28,42 +26,30 @@ function App() {
       });
   }, []);
 
-  // --- UI RENDER ---
   return (
-    <div style={styles.container}>
-      <h1>☁️ AWS Connectivity Test</h1>
-      
-      <div style={styles.card}>
+    <div style={{ textAlign: "center", padding: 50, fontFamily: "sans-serif" }}>
+      <h1>🚀 Hackathon Connectivity Test</h1>
+
+      <div style={{
+        border: "1px solid #ddd",
+        padding: 20,
+        borderRadius: 8,
+        maxWidth: 500,
+        margin: "20px auto",
+        backgroundColor: "#f0fdf4" // Light green background
+      }}>
         <h2>Status: {loading ? "Connecting..." : (error ? "FAILED ❌" : "SUCCESS ✅")}</h2>
-        
-        {error && <p style={{color: 'red'}}>Error: {error}</p>}
-        
+
         {data && (
-          <div style={{textAlign: 'left'}}>
+          <div style={{ textAlign: 'left', marginTop: 20 }}>
             <p><strong>Message:</strong> {data.message}</p>
-            <p><strong>Ethical Score Test:</strong> {data.score_test}</p>
-            <p><strong>Backend Status:</strong> {data.status}</p>
+            <p><strong>Score:</strong> {data.score_test}</p>
+            <p style={{ fontSize: 12, color: "#888" }}>Served from: AWS Lambda</p>
           </div>
         )}
       </div>
-
-      <p style={{marginTop: 20, fontSize: 12, color: '#666'}}>
-        Backend URL: {API_URL}
-      </p>
     </div>
   );
 }
-
-const styles = {
-  container: { textAlign: "center", padding: 50, fontFamily: "sans-serif" },
-  card: { 
-    border: "1px solid #ddd", 
-    padding: 20, 
-    borderRadius: 8, 
-    maxWidth: 400, 
-    margin: "20px auto",
-    backgroundColor: "#f9f9f9"
-  }
-};
 
 export default App;
